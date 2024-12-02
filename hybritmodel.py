@@ -5,15 +5,13 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.tree import plot_tree
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
-# ---------------------- 1. Data Loading ----------------------
 def load_data(file_path):
     """Loads the dataset."""
     df = pd.read_excel(file_path)
     if df.isnull().values.any():
         print("Warning: Missing values detected in the dataset. Please check.")
     return df
-
-# ---------------------- 2. Hybrid Model with ML ----------------------
+    
 def hybrid_model_with_ml(df):
     """Creates and evaluates a hybrid model using WorldClim and CHELSA data."""
     # Features and target
@@ -46,7 +44,6 @@ def hybrid_model_with_ml(df):
 
     return df, mae_ml, rmse_ml, r2_ml
 
-# ---------------------- 3. Decision Tree Plot ----------------------
 def plot_decision_tree(model, feature_names, max_depth=3):
     """Plots a decision tree from the Random Forest model (limited depth)."""
     first_tree = model.estimators_[0]  # Select the first tree
@@ -58,7 +55,6 @@ def plot_decision_tree(model, feature_names, max_depth=3):
     plt.show()
     print(f"Decision Tree Plot (Max Depth: {max_depth}) saved successfully.")
 
-# ---------------------- 4. Feature Importance Plot ----------------------
 def plot_feature_importance(model, feature_names):
     """Plots feature importance in the Random Forest model."""
     importance = model.feature_importances_
@@ -70,7 +66,6 @@ def plot_feature_importance(model, feature_names):
     plt.show()
     print("Feature Importance Plot saved successfully.")
 
-# ---------------------- 5. Actual vs Predicted Plot ----------------------
 def plot_actual_vs_predicted(y_true, y_pred):
     """Plots actual vs predicted values."""
     plt.figure(figsize=(8, 8))
@@ -85,7 +80,6 @@ def plot_actual_vs_predicted(y_true, y_pred):
     plt.show()
     print("Actual vs Predicted Plot saved successfully.")
 
-# ---------------------- 6. Residual Plot ----------------------
 def plot_residuals(y_true, y_pred):
     """Plots residuals (errors) for predictions."""
     residuals = y_true - y_pred
@@ -101,8 +95,7 @@ def plot_residuals(y_true, y_pred):
     plt.show()
     print("Residuals Distribution Plot saved successfully.")
 
-# ---------------------- 7. Main Execution ----------------------
-file_path = r"D:\Belgelerim\Desktop\sıcaklık karşılatırma\tumveriler.xlsx"
+file_path = r"data_set.xlsx"
 
 # Load data
 df = load_data(file_path)
