@@ -10,14 +10,13 @@ from sklearn.ensemble import VotingRegressor
 from scipy.stats import ks_2samp
 
 def load_data(file_path):
-    """Veri setini yükler ve eksik değerleri kontrol eder."""
+    """Load the data set and check for missing values."""
     df = pd.read_excel(file_path)
     if df.isnull().values.any():
-        print("Veri setinde eksik değerler var. Lütfen kontrol edin.")
+        print("There are missing values in the data set. Please check.")
     return df
 
 def train_and_evaluate_model(model, X, y):
-    """Bir modeli eğitir ve R², MAE, RMSE gibi metrikleri döner."""
     model.fit(X, y)
     predictions = model.predict(X)
     r2 = r2_score(y, predictions)
@@ -26,7 +25,6 @@ def train_and_evaluate_model(model, X, y):
     return predictions, r2, mae, rmse
 
 def calculate_metrics(y_true, y_pred):
-    """Verilen gerçek ve tahmin değerler için ek metrikleri hesaplar."""
     mae = mean_absolute_error(y_true, y_pred)
     rmse = np.sqrt(mean_squared_error(y_true, y_pred))
     bias = np.mean(y_true - y_pred)
@@ -34,7 +32,6 @@ def calculate_metrics(y_true, y_pred):
     return mae, rmse, bias, willmott_d
 
 def detailed_analysis(df):
-    """Min, Max ve Average sütunları için hata metriklerini hesaplar."""
     metrics = []
     columns = [
         ('idw_min', 'chelsa_min', 'worldclim_min'),
@@ -66,22 +63,18 @@ def detailed_analysis(df):
 
     return pd.DataFrame(metrics)
 
-# Veri yükleme
-file_path = "detailed_metrics_results.xlsx"  # Hata metriklerinin olduğu Excel dosyasını buraya koyun
+file_path = "detailed_metrics_results.xlsx" 
 detailed_metrics = pd.read_excel(file_path)
 
-file_path = r"D:\Belgelerim\Desktop\sıcaklık karşılatırma\tumveriler.xlsx"
+file_path = r"data_set"
 df = load_data(file_path)
 
-# Detaylı Analiz (Min, Max, Average)
 detailed_metrics = detailed_analysis(df)
 print(detailed_metrics)
 
-# Detaylı Analiz Sonuçlarını Kaydetme
 detailed_metrics.to_excel("detailed_metrics_results.xlsx", index=False)
-print("Detaylı analiz sonuçları Excel dosyasına kaydedildi.")
+print("Detailed analysis results were saved in an Excel file.")
 
-# Willmott D değerlerini kontrol et
 print(detailed_metrics[['CHELSA_D', 'WorldClim_D']])
 
 
